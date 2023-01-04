@@ -2,9 +2,26 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-df = pd.read_csv('CC2040004_20210605_095056.csv', header=28)
+from os import listdir
 
-plt.plot(df.Temp,df.Depth)
+def find_csv_filenames( path_to_dir, suffix=".csv" ):
+    filenames = listdir(path_to_dir)
+    return [ filename for filename in filenames if filename.endswith( suffix ) ]
+
+filenames = find_csv_filenames('./') #find the .csv files in the current folder
+
+# Read in a file
+for filename in filenames:
+    df = pd.read_csv(filename, header=28)
+    mask = df.columns.str.contains('Temp.*')
+    T  = df.loc[:,mask] # selects mask
+    mask = df.columns.str.contains('Depth.*')
+    D  = df.loc[:,mask] # selects mask
+
+    # Plot the thermal profile
+    plt.plot(T,D)
+
+# Format the plot
 ax = plt.gca()
 ax.invert_yaxis()
 plt.grid()
