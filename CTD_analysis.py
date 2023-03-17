@@ -73,6 +73,6 @@ ax.invert_yaxis()
 plt.grid()
 plt.xlabel('Temperature (C)')
 plt.ylabel('Depth (m)')
-plt.xticks(range(4, 21, 2))
+plt.xticks(range(4, 21, 2)) # Change the font size here
 plt.show()
 # %%
