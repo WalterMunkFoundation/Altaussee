@@ -65,11 +65,14 @@ plt.show()
 ax = plt.subplot()
 fig = ax.scatter(Tmp,Dpth,2,c = 'k')
 
+plt.rcParams.update({'font.size': 20})
+
 # Format the plot
 ax = plt.gca()
 ax.invert_yaxis()
 plt.grid()
 plt.xlabel('Temperature (C)')
 plt.ylabel('Depth (m)')
+plt.xticks(range(4, 21, 2))
 plt.show()
 # %%
