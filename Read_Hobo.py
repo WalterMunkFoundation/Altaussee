@@ -1,4 +1,6 @@
 import pandas as pd
+import xarray as xr
+import matplotlib.pyplot as plt
 
 from hoboreader import HoboReader
 
@@ -11,19 +13,22 @@ Tmp = []
 W_det = []
 
 df = pd.read_csv(dirpath + file, header=0)
-mask = df.columns.str.contains('Temp')
-Tdata  = df.loc[:,mask] # selects mask
-mask = df.columns.str.contains('Time')
-Time  = df.loc[:,mask] # selects mask
-mask = df.columns.str.contains('Water')
-Water_Detect  = df.loc[:,mask] # selects mask
-Tme.append(Time)
-Tmp.append(Tdata)
-W_det.append(Water_Detect)
+df.rename(columns={'Date-Time (PDT)': 'Time'}, inplace=True)
+df.rename(columns={'#': 'Obs_num'}, inplace=True)
+df.rename(columns={'Ch: 1 - Temperature   (°C)': 'temp_C'}, inplace=True)
+df.rename(columns={'Water Detect': 'Water_Detect'}, inplace=True)
+df.rename(columns={'Host Connected': 'Host_Connect'}, inplace=True)
+df.rename(columns={'End of File': 'EOF'}, inplace=True)
 
-Tme = pd.concat(Tme,ignore_index=True)
-Tmp = pd.concat(Tmp,ignore_index=True)
-W_det = pd.concat(W_det,ignore_index=True)
+df['Time'] = pd.to_datetime(df['Time'])
+
+
+df = df.set_index('Time')
+
+ds = xr.Dataset(df)
+
+# Need to QC to remove nans and replace variables with attributes
+
 
 # Convert PD dataframe to an xarray dataset
 print()
