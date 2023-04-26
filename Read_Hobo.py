@@ -4,8 +4,10 @@ import matplotlib.pyplot as plt
 
 from hoboreader import HoboReader
 
-file = '21721695_test_data.csv'
+basefile = '21721695_test_data'
+file = basefile + '.csv'
 dirpath = '/Users/gregsinnett/GitHub/Altaussee/Hobo_Data/'
+outfile = basefile + '.nc'
 
 
 Tme = []
@@ -30,5 +32,5 @@ ds = xr.Dataset(df)
 # Need to QC to remove nans and replace variables with attributes
 
 
-# Convert PD dataframe to an xarray dataset
-print()
+# Save the dataframe
+ds.to_netcdf(outfile)
