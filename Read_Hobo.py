@@ -2,8 +2,6 @@ import pandas as pd
 import xarray as xr
 import matplotlib.pyplot as plt
 
-from hoboreader import HoboReader
-
 basefile = '21721695_test_data'
 file = basefile + '.csv'
 dirpath = '/Users/gregsinnett/GitHub/Altaussee/Hobo_Data/'
