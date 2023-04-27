@@ -2,9 +2,9 @@ import pandas as pd
 import xarray as xr
 import matplotlib.pyplot as plt
 
-basefile = '21721695_test_data'
+basefile = '21721695_cal'
 file = basefile + '.csv'
-dirpath = '/Users/gregsinnett/GitHub/Altaussee/Hobo_Data/'
+dirpath = '/Users/gregsinnett/GitHub/Altaussee/Hobo_Data/Cal_Data/'
 outfile = basefile + '.nc'
 
 
@@ -31,4 +31,4 @@ ds = xr.Dataset(df)
 
 
 # Save the dataframe
-ds.to_netcdf(outfile)
+ds.to_netcdf(dirpath + outfile)
