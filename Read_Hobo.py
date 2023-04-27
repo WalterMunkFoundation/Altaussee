@@ -2,10 +2,12 @@ import pandas as pd
 import xarray as xr
 import matplotlib.pyplot as plt
 
-basefile = '21721695_cal'
+basefile = '21721686_cal'
 file = basefile + '.csv'
 dirpath = '/Users/gregsinnett/GitHub/Altaussee/Hobo_Data/Cal_Data/'
 outfile = basefile + '.nc'
+run_checks = 'yes'
+save_file = 'no'
 
 
 Tme = []
@@ -27,8 +29,22 @@ df = df.set_index('Time')
 
 ds = xr.Dataset(df)
 
-# Need to QC to remove nans and replace variables with attributes
+# Calculate the mean sample rate
+times = pd.to_datetime(ds['Time'].values)
+dt = pd.Series(times).diff().mean()
+sample_rate = dt.total_seconds()
 
+
+if run_checks == 'yes':
+    fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1, sharex=True)
+    ax1.scatter(ds.Time,ds.Time)
+    ax1.grid(True)
+    ax1.set_title(f'Sample rate = {sample_rate:.2f} s')
+
+    ax2.scatter(ds.Time,ds.temp_C)
+    ax2.grid(True)
+    ax2.set_ylabel('Temp C')
 
 # Save the dataframe
-ds.to_netcdf(dirpath + outfile)
+if save_file == 'yes':
+    ds.to_netcdf(dirpath + outfile)
