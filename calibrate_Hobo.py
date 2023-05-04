@@ -1,5 +1,6 @@
 import pandas as pd
 import xarray as xr
+import numpy as np
 import matplotlib.pyplot as plt
 
 # basefile = '21721686_cal'
@@ -18,20 +19,26 @@ datasets = datasets.sortby('Time')
 # Clip the dataset to isolate the calibration period
 # Define the time range to clip to
 start_time = '2023-04-26T16:00'
-end_time = '2023-04-26T16:33'
+end_time = '2023-04-26T16:15'
 
 # Clip the dataset to the specified time range
 ds_clipped = datasets.sel(Time=slice(start_time, end_time)).sel(Time=slice(start_time, end_time))
 
-# plot the clipped data
+# Find the mean at each time step **working here
+mean_vals = [ds_clipped.temp_C.isel(Time=alltime).mean().values for alltime in range(0,np.size(ds_clipped.Time))]
+ds_clipped['cal_means'] = (('Time'), mean_vals)
+
+# plot the clipped data and means
 fig, ax = plt.subplots()
 [ax.scatter(ds_clipped.Time,ds_clipped.temp_C[SN]) for SN in datasets.SN]
+ax.scatter(ds_clipped.Time,ds_clipped.cal_means,color = 'red')
 ax.set_ylabel('Temp C')
 ax.grid(True)
 
+# Find the differences from the mean for each instrument
+ds_clipped['epsilon'] = ds_clipped.temp_C - ds_clipped.cal_means
 
-# Find the mean at each time step **working here
-means = [ds_clipped.temp_C[:,SN].mean().values for SN in ds_clipped.SN]
-ds_clipped.temp_C.sel(SN = 0).mean().values
+mean_eps = [ds_clipped.epsilon.isel(SN=allinst).mean().values for allinst in ds_clipped.SN]
+ds_clipped['mean_eps'] = (('SN'), mean_eps) # mean offsets are stored here
 
 print()
