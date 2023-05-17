@@ -91,4 +91,3 @@ plt.ylabel('Depth (m)')
 plt.xticks(range(4, 21, 2)) # Change the font size here
 plt.show()
 # %%
-print()
