@@ -14,7 +14,10 @@ datasets = xr.open_mfdataset(file_pattern, concat_dim="SN", combine="nested")
 datasets = datasets.sortby('Time')
 
 # plot all the data
-# [plt.scatter(datasets.Time,datasets.temp_C[SN]) for SN in datasets.SN]
+fig, ax = plt.subplots()
+[ax.scatter(datasets.Time,datasets.temp_C[SN]) for SN in datasets.SN]
+ax.set_ylabel('Temp C')
+ax.grid(True)
 
 # Clip the dataset to isolate the calibration period
 # Define the time range to clip to
