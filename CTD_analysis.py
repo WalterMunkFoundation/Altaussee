@@ -58,9 +58,9 @@ Press = pd.concat(Press,ignore_index=True)
 
 PotTemp = gsw.pt0_from_t(0,Tmp,Press) # Option to calculate potential temperature for deep casts
 
-df_full = pd.concat([Lat, Lon, Tmp, Den, Dpth, Press], axis=1)
+df_full = pd.concat([Lat, Lon, Tmp, Den, -Dpth, Press], axis=1)
 # Save the DataFrame as a CSV file
-df_full.to_csv('Altaussee_CTD.csv', index=False)
+df_full.to_csv('/Users/gregsinnett/Google Drive/Shared drives/Projects/Altaussee/Data/2021/Altaussee_CTD.csv', index=False)
 
 #%% Plot Temperature vs. Density with Depth
 ax = plt.subplot()
