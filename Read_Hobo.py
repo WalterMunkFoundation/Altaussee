@@ -2,12 +2,12 @@ import pandas as pd
 import xarray as xr
 import matplotlib.pyplot as plt
 
-basefile = '21721686'
+basefile = '21721695_cal'
 file = basefile + '.csv'
 dirpath = '/Users/gregsinnett/GitHub/Altaussee/Hobo_Data/Cal_Data/'
 outfile = basefile + '.nc'
 run_checks = 'yes'
-save_file = 'no'
+save_file = 'yes'
 
 
 Tme = []
@@ -15,7 +15,7 @@ Tmp = []
 W_det = []
 
 df = pd.read_csv(dirpath + file, header=0)
-df.rename(columns={'Date-Time (PDT)': 'Time'}, inplace=True)
+df.rename(columns={'Date-Time (CEST)': 'Time'}, inplace=True)
 df.rename(columns={'#': 'Obs_num'}, inplace=True)
 df.rename(columns={'Ch: 1 - Temperature   (°C)': 'temp_C'}, inplace=True)
 df.rename(columns={'Water Detect': 'Water_Detect'}, inplace=True)
@@ -44,6 +44,7 @@ if run_checks == 'yes':
     ax2.scatter(ds.Time,ds.temp_C)
     ax2.grid(True)
     ax2.set_ylabel('Temp C')
+    plt.show()
 
 # Save the dataframe
 if save_file == 'yes':
