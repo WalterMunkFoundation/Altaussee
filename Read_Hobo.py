@@ -2,7 +2,7 @@ import pandas as pd
 import xarray as xr
 import matplotlib.pyplot as plt
 
-basefile = '21721686_cal'
+basefile = '21721686'
 file = basefile + '.csv'
 dirpath = '/Users/gregsinnett/GitHub/Altaussee/Hobo_Data/Cal_Data/'
 outfile = basefile + '.nc'
