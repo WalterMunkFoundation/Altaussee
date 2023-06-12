@@ -2,7 +2,7 @@ import pandas as pd
 import xarray as xr
 import matplotlib.pyplot as plt
 
-basefile = '21721695_cal'
+basefile = '21721695_cal' # format is 'serialnumber_cal'
 file = basefile + '.csv'
 dirpath = '/Users/gregsinnett/GitHub/Altaussee/Hobo_Data/Cal_Data/'
 outfile = basefile + '.nc'
@@ -28,6 +28,7 @@ df['Time'] = pd.to_datetime(df['Time'])
 df = df.set_index('Time')
 
 ds = xr.Dataset(df)
+ds['SN'] = str(basefile[0:-4]) # save the serial number
 
 # Calculate the mean sample rate
 times = pd.to_datetime(ds['Time'].values)
