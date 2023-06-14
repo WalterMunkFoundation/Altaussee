@@ -15,11 +15,11 @@ file_pattern = dirpath + '*.nc'
 datasets = xr.open_mfdataset(file_pattern, concat_dim="Num", combine="nested")
 datasets = datasets.sortby('Time')
 
-# plot all the data
-fig, ax = plt.subplots()
-[ax.scatter(datasets.Time,datasets.temp_C[Num]) for Num in datasets.Num]
-ax.set_ylabel('Temp C')
-ax.grid(True)
+# # plot all the data
+# fig, ax = plt.subplots()
+# [ax.scatter(datasets.Time,datasets.temp_C[Num]) for Num in datasets.Num]
+# ax.set_ylabel('Temp C')
+# ax.grid(True)
 
 # Clip the dataset to isolate the calibration period
 # Define the time range to clip to
@@ -27,7 +27,7 @@ start_time = '2023-06-11T16:08'
 end_time = '2023-06-11T17:00'
 
 # Select the instrument to plot
-inst = 0
+inst = 6
 
 # Clip the dataset to the specified time range
 ds_clipped = datasets.sel(Time=slice(start_time, end_time)).sel(Time=slice(start_time, end_time))
@@ -61,8 +61,9 @@ slope, intercept, r_value, p_value, std_err = stats.linregress(x_valid,y_valid)
 
 fig, ax = plt.subplots()
 ax.scatter(x_valid,y_valid)
-ax.plot([x_valid.min(), y_valid.max()],[x_valid.min() * slope + intercept, x_valid.max() * slope + intercept],color = 'red')
-ax.set_ylabel('Temp C')
+ax.plot([x_valid.min(), x_valid.max()],[x_valid.min() * slope + intercept, x_valid.max() * slope + intercept],color = 'red')
+ax.set_xlabel('Observed Temp [C]')
+ax.set_ylabel('True Temp [C]')
 ax.grid(True)
 title = 'Serial number: '+ds_clipped.SN[inst].values + '\nSlope: ' + str(slope) + '\nIntercept: '+str(intercept)
 ax.set_title(title,fontsize = 10)
