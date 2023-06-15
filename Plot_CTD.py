@@ -15,15 +15,14 @@ Temp = []
 Depth = []
 
 # Read in a file
-for filename in filenames:
+color = ['blue', 'red', 'green', 'black', 'orange']
+for i, filename in enumerate(filenames):
     df = pd.read_csv(pathname + filename, header=0)
     mask = df.columns.str.contains('Temp.*')
     T  = df.loc[:,mask] # selects mask
     mask = df.columns.str.contains('Depth.*')
     D  = df.loc[:,mask] # selects mask
-    plt.plot(T,D - D.min()) # normalize to zero depth
-
-
+    plt.plot(T,D - D.min(), color=color[i]) # normalize to zero depth
 
 # Format the plot
 ax = plt.gca()
