@@ -8,18 +8,22 @@ def find_csv_filenames( path_to_dir, suffix=".csv" ):
     filenames = listdir(path_to_dir)
     return [ filename for filename in filenames if filename.endswith( suffix ) ]
 
-filenames = find_csv_filenames('./') #find the .csv files in the current folder
+pathname = '/Users/gregsinnett/GitHub/Altaussee/Heat_2023/CTD casts/'
+filenames = find_csv_filenames(pathname) #find the .csv files in the specified directory
+
+Temp = []
+Depth = []
 
 # Read in a file
 for filename in filenames:
-    df = pd.read_csv(filename, header=28)
+    df = pd.read_csv(pathname + filename, header=0)
     mask = df.columns.str.contains('Temp.*')
     T  = df.loc[:,mask] # selects mask
     mask = df.columns.str.contains('Depth.*')
     D  = df.loc[:,mask] # selects mask
+    plt.plot(T,D - D.min()) # normalize to zero depth
 
-    # Plot the thermal profile
-    plt.plot(T,D)
+
 
 # Format the plot
 ax = plt.gca()
