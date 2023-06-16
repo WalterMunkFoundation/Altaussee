@@ -14,7 +14,7 @@ filenames = find_csv_filenames(pathname) #find the .csv files in the specified d
 Temp = []
 Depth = []
 
-# Read in a file
+# Read in a file and plot temperature
 color = ['blue', 'red', 'green', 'black', 'orange']
 for i, filename in enumerate(filenames):
     df = pd.read_csv(pathname + filename, header=0)
@@ -29,5 +29,23 @@ ax = plt.gca()
 ax.invert_yaxis()
 plt.grid()
 plt.xlabel('Temperature (C)')
+plt.ylabel('Depth (m)')
+plt.show()
+
+# Read in a file and plot conductivity
+color = ['blue', 'red', 'green', 'black', 'orange']
+for i, filename in enumerate(filenames):
+    df = pd.read_csv(pathname + filename, header=0)
+    mask = df.columns.str.contains('Cond.*')
+    C  = df.loc[:,mask] # selects mask
+    mask = df.columns.str.contains('Depth.*')
+    D  = df.loc[:,mask] # selects mask
+    plt.plot(C,D - D.min(), color=color[i]) # normalize to zero depth
+
+# Format the plot
+ax = plt.gca()
+ax.invert_yaxis()
+plt.grid()
+plt.xlabel('Conductivity (uS/cm)')
 plt.ylabel('Depth (m)')
 plt.show()
