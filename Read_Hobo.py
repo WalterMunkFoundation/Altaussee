@@ -2,7 +2,7 @@ import pandas as pd
 import xarray as xr
 import matplotlib.pyplot as plt
 
-basefile = '21721695 2023-06-16 12_38_56 CEST (Data CEST)' # format is 'serialnumber readout_date time timezone'
+basefile = '21721695 2023-06-17 07_58_31 CEST (Data CEST)' # format is 'serialnumber readout_date time timezone'
 file = basefile + '.csv'
 dirpath = '/Users/gregsinnett/GitHub/Altaussee/Heat_2023/Stream Temp/'
 outfile = basefile + '.nc'
