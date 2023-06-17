@@ -48,6 +48,9 @@ Dpth = pd.concat(Dpth,ignore_index=True)
 df_full = pd.concat([Time, Dpth, Cond, Tmp], keys=['Time', 'Depth', 'Conductivity', 'Temperature'], axis=1)
 df_full = df_full.sort_values(by='Time')
 df_full = df_full.reset_index(drop = True)
+
+# Use gsw to find salinity
+
 # Save the DataFrame as a CSV file
 df_full.to_csv(path + '.csv', index=False)
 
