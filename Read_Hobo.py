@@ -42,7 +42,7 @@ for basefile in filenames:
     df = df.set_index('Time')
 
     ds = xr.Dataset(df)
-    ds['SN'] = str(basefile[0:-4]) # save the serial number
+    ds['SN'] = str(basefile[0:8]) # save the serial number
 
     # Calculate the mean sample rate
     times = pd.to_datetime(ds['Time'].values)
