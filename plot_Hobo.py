@@ -55,9 +55,20 @@ plt.show()
 sensors = [3,4,5] #specify the desired sensor from the top (zero indexed)
 fig, ax = plt.subplots()
 for num in sensors:
-    ax.scatter(ds_clipped.Time,ds_clipped.temp_C[num],4)
+    ax.scatter(ds_clipped.Time,ds_clipped.temp_C[num],4,label = Depths[num])
     ax.set_ylabel('Temp C')
     ax.grid(True)
+# Set the date formatter
+date_formatter = mdates.DateFormatter('%b %d %H:%M')
+ax.xaxis.set_major_formatter(date_formatter)
+# Adjust x-axis tick label rotation and alignment
+plt.xticks(rotation=45, ha='right')
+# Adjust the position of the plot within the figure
+plt.subplots_adjust(left=0.15, right=0.8, bottom=0.2, top=0.9)  # Adjust the values as desired
+plt.legend()
+# Add legend outside the plot on the right
+plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), title = 'Inst Depths')
+
 ax.set_title('Serial Number: '+str(sensors))
 plt.show()
 
