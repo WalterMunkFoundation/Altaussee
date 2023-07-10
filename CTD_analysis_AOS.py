@@ -13,6 +13,14 @@ def find_csv_filenames( path_to_dir, suffix=".csv" ):
     filenames = listdir(path_to_dir)
     return [ filename for filename in filenames if filename.endswith( suffix ) ]
 
+def clean_downcast( df,rate ):
+    test_dc = [result for result in np.convolve(df.Depth.diff(),np.ones(8),mode='same')>rate]
+    dc_start = np.where(test_dc)[0].min()
+    test_uc = [result for result in np.convolve(df.Depth.diff(),np.ones(8),mode='same')<-1]
+    uc_end = np.where(test_uc)[0].max()
+    return dc_start, uc_end
+
+
 # Read in all the files
 path = '/Users/gregsinnett/GitHub/Altaussee/Heat_2023/CTD casts/Cast5'
 os.chdir(path) #change to the desired working directory
@@ -49,14 +57,17 @@ df_full = pd.concat([Time, Dpth, Cond, Tmp], keys=['Time', 'Depth', 'Conductivit
 df_full = df_full.sort_values(by='Time')
 df_full = df_full.reset_index(drop = True)
 
+# Clip the time series based on downcast and upcast velocity > rate m/s
+dc_start, uc_end = clean_downcast( df_full,1 )
+df_clean = df_full[dc_start:uc_end].reset_index(drop = True)
 # Use gsw to find salinity
 
 # Save the DataFrame as a CSV file
-df_full.to_csv(path + '.csv', index=False)
+df_clean.to_csv(path + '.csv', index=False)
 
 #%% Plot Temperature vs. Depth
 ax = plt.subplot()
-fig = ax.scatter(df_full['Temperature'],df_full['Depth'],20,c = df_full.index.to_numpy())
+fig = ax.scatter(df_clean['Temperature'],df_clean['Depth'],20,c = df_clean.index.to_numpy())
 
 plt.rcParams.update({'font.size': 20})
 
