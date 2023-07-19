@@ -35,18 +35,25 @@ for basefile in filenames:
 
     # NEED TO RENAME COLUMNS FOR CONVENIENCE
 
-    df.rename(columns={'Date-Time (CEST)': 'Time'}, inplace=True)
-    df.rename(columns={'#': 'Obs_num'}, inplace=True)
-    df.rename(columns={'Ch: 1 - Temperature   (°C)': 'temp_C'}, inplace=True)
-    df.rename(columns={'Water Detect': 'Water_Detect'}, inplace=True)
-    df.rename(columns={'Host Connected': 'Host_Connect'}, inplace=True)
-    df.rename(columns={'End of File': 'EOF'}, inplace=True)
-
-    df['Time'] = pd.to_datetime(df['Time'])
-
-
-    df = df.set_index('Time')
-
+    df.rename(columns={'Temp. Aussen Nord': 'Air Temp [C]'}, inplace=True)
+    df.rename(columns={'Wassertemp. unten Grad C': 'Bottom Water Temp [C]'}, inplace=True)
+    df.rename(columns={'Wassertemp. oben Grad C': 'Surface Water Temp [C]'}, inplace=True)
+    df.rename(columns={'30003 Wind Mittel m/s': 'Wind Speed [m/s]'}, inplace=True)
+    df.rename(columns={'30011 Wind max m/s': 'Max Wind Speed [m/s]'}, inplace=True)
+    df.rename(columns={'30203 Windrichtung Mittel Grad': 'Wind Direction [deg]'}, inplace=True)
+    df.rename(columns={'30211 Windrichtung max. Grad': 'Max Wind Direction [deg]'}, inplace=True)
+    df.rename(columns={'30401 Lufttemperatur Grad C': 'Air Temp [C]'}, inplace=True)
+    df.rename(columns={'30601 Rel. Feuchte %': 'Relative Hum [pct rh]'}, inplace=True)
+    df.rename(columns={'30603 Abs. Feuchte g/m2': 'Absolute Hum [g/m^3]'}, inplace=True)
+    df.rename(columns={'30605 Taupunkttemperatur Grad C': 'Dew Point Temp [C]'}, inplace=True)
+    df.rename(columns={'30801 Abs. Luftdruck hPa': 'Absolute air pressure [hPa]'}, inplace=True)
+    df.rename(columns={'30803 Rel.  Luftdruck NHN hPa': 'Relative air pressure [hPa]'}, inplace=True)
+    df.rename(columns={'31001 Globalstrahlung W/m2': 'Radiation [W/m^2]'}, inplace=True)
+    df.rename(columns={'31401 Niederschlagsstatus 0/1': 'Precip Indicator [0/1]'}, inplace=True)
+    df.rename(columns={'31403 Niederschlagsintensitaet mm/h': 'Precip [mm/h]'}, inplace=True)
+    df.rename(columns={'31405 Niederschlagsmenge_mm/d': 'Daily Precip [mm/day]'}, inplace=True)
+    df.rename(columns={'31407 Niederschlagsart': 'Precip Type'}, inplace=True)
+    
     ds = xr.Dataset(df)
     ds['SN'] = str(basefile[0:8]) # save the serial number
 
