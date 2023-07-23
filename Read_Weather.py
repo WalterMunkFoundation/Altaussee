@@ -26,7 +26,7 @@ df_full = pd.DataFrame(columns=['Air Temp [C]', 'Bottom Water Temp [C]', 'Surfac
        'Absolute air pressure [hPa]', 'Relative air pressure [hPa]',
        'Radiation [W/m^2]', 'Precip Indicator [0/1]', 'Precip [mm/h]',
        'Daily Precip [mm/day]', 'Precip Type'])
-for basefile in filenames[-3:]:
+for basefile in filenames[-5:]:
     file = basefile
 
     df = pd.read_csv(path + file, thousands='.', decimal=',', sep=';', header=0, index_col=False)
