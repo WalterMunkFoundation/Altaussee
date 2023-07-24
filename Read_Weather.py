@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import os
 from os import listdir
 
-run_checks = 'yes'
+run_checks = 'no'
 save_file = 'yes'
 
 def find_csv_filenames( path_to_dir, suffix=".csv" ):
@@ -14,7 +14,7 @@ def find_csv_filenames( path_to_dir, suffix=".csv" ):
     return [ filename for filename in filenames if filename.endswith( suffix ) ]
 
 # Read in all the files
-path = '/Users/gregsinnett/Google Drive/Shared drives/Projects/Altaussee/Data/Weather Station/'
+path = '/Users/gregsinnett/Google Drive/Shared drives/Projects/Altaussee/Data/Weather Station/Data/'
 os.chdir(path) #change to the desired working directory
 filenames = find_csv_filenames('./') #find the .csv files in the current folder
 filenames.sort()
@@ -26,7 +26,7 @@ df_full = pd.DataFrame(columns=['Air Temp [C]', 'Bottom Water Temp [C]', 'Surfac
        'Absolute air pressure [hPa]', 'Relative air pressure [hPa]',
        'Radiation [W/m^2]', 'Precip Indicator [0/1]', 'Precip [mm/h]',
        'Daily Precip [mm/day]', 'Precip Type'])
-for basefile in filenames[-5:]:
+for basefile in filenames[-7:]:
     file = basefile
 
     df = pd.read_csv(path + file, thousands='.', decimal=',', sep=';', header=0, index_col=False)
@@ -84,4 +84,4 @@ if save_file == 'yes':
     # current_date = datetime.datetime.now()
     # formatted_date = current_date.strftime("%Y_%m_%d")
     outfile = 'AltausseeWeather' + '.nc'
-    ds.to_netcdf(path + outfile)
+    ds.to_netcdf(path[:-5] + outfile) # Save to the root path (without 'Data/')
