@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 def run_script(script_name):
     try:
@@ -8,6 +9,12 @@ def run_script(script_name):
         exit(1)
 
 if __name__ == "__main__":
+    # Set the working directory to the location of your Python scripts
+    script_directory = '/Users/gregsinnett/GitHub/Altaussee/'
+
+    # Change the working directory to the script_directory
+    os.chdir(script_directory)
+    
     # Replace 'script1.py' and 'script2.py' with the actual filenames of your .py scripts
     script1 = 'Read_Weather.py'
     script2 = 'plot_Weather.py'

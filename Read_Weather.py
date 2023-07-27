@@ -5,9 +5,14 @@ import matplotlib.pyplot as plt
 
 import os
 from os import listdir
+import glob
 
 run_checks = 'no'
 save_file = 'yes'
+
+def find_csv_filenames2(directory):
+    csv_files = glob.glob(os.path.join(directory, '*.csv'))
+    return csv_files
 
 def find_csv_filenames( path_to_dir, suffix=".csv" ):
     filenames = listdir(path_to_dir)
@@ -16,7 +21,7 @@ def find_csv_filenames( path_to_dir, suffix=".csv" ):
 # Read in all the files
 path = '/Users/gregsinnett/Google Drive/Shared drives/Projects/Altaussee/Data/Weather Station/Data/'
 os.chdir(path) #change to the desired working directory
-filenames = find_csv_filenames('./') #find the .csv files in the current folder
+filenames = find_csv_filenames2(path) #find the .csv files in the current folder
 filenames.sort()
 
 df_full = pd.DataFrame(columns=['Air Temp [C]', 'Bottom Water Temp [C]', 'Surface Water Temp [C]',
@@ -29,7 +34,8 @@ df_full = pd.DataFrame(columns=['Air Temp [C]', 'Bottom Water Temp [C]', 'Surfac
 for basefile in filenames[-7:]:
     file = basefile
 
-    df = pd.read_csv(path + file, thousands='.', decimal=',', sep=';', header=0, index_col=False)
+    # df = pd.read_csv(path + file, thousands='.', decimal=',', sep=';', header=0, index_col=False)
+    df = pd.read_csv(file, thousands='.', decimal=',', sep=';', header=0, index_col=False)
     # Manipulate the date to create a standard index of datetime
     df['Datum'] = df['Datum'].astype(str)
     combined_datetime = df['Datum'] + ' ' + df['Zeit']
