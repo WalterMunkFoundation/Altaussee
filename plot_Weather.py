@@ -48,6 +48,11 @@ ax4.set_title('Wind')
 axc = ax4.twinx()
 ds['Wind Direction [deg]'].plot(ax=axc, color='red', label='Wind Dir [deg]', linewidth = 0.5)
 axc.set_ylabel('Direction [deg]', color='red')
+ymin, ymax = -10, 370
+axc.set_ylim(ymin, ymax)
+yticks = [0, 180, 360] 
+axc.set_yticks(yticks)
+
 
 ds['Relative Hum [pct rh]'].plot(ax = ax5, color = 'black')
 ax5.grid()
