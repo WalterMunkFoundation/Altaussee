@@ -35,11 +35,10 @@ for basefile in filenames[-7:]:
     file = basefile
 
     # df = pd.read_csv(path + file, thousands='.', decimal=',', sep=';', header=0, index_col=False)
-    df = pd.read_csv(file, thousands='.', decimal=',', sep=';', header=0, index_col=False)
+    df = pd.read_csv(file, thousands='.', decimal=',', sep=';', header=0, index_col=False, dtype={'Datum': str})
     # Manipulate the date to create a standard index of datetime
-    df['Datum'] = df['Datum'].astype(str)
     combined_datetime = df['Datum'] + ' ' + df['Zeit']
-    df['datetime'] = pd.to_datetime(combined_datetime, format='%d%m%Y %H:%M:%S')
+    df['datetime'] = pd.to_datetime(combined_datetime, format='%d.%m.%Y %H:%M:%S')
     df = df.drop(['Datum', 'Zeit'], axis=1)
     df.set_index('datetime',inplace = True)
 
