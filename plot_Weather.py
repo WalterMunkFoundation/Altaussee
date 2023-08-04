@@ -39,11 +39,21 @@ ax3.grid()
 ax3.set_xlabel(None)
 ax3.set_ylabel('[mm/h]')
 ax3.set_title('Precip')
+
 ds['Wind Speed [m/s]'].plot(ax = ax4, color = 'black')
 ax4.grid()
 ax4.set_xlabel(None)
-ax4.set_ylabel('[m/s]')
-ax4.set_title('Wind Speed')
+ax4.set_ylabel('Speed [m/s]')
+ax4.set_title('Wind')
+axc = ax4.twinx()
+ds['Wind Direction [deg]'].plot(ax=axc, color='red', label='Wind Dir [deg]', linewidth = 0.5)
+axc.set_ylabel('Direction [deg]', color='red')
+ymin, ymax = -10, 370
+axc.set_ylim(ymin, ymax)
+yticks = [0, 180, 360] 
+axc.set_yticks(yticks)
+
+
 ds['Relative Hum [pct rh]'].plot(ax = ax5, color = 'black')
 ax5.grid()
 ax5.set_xlabel(None)
