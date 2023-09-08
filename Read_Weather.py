@@ -25,12 +25,12 @@ filenames = find_csv_filenames2(path) #find the .csv files in the current folder
 filenames.sort()
 
 df_full = pd.DataFrame(columns=['Air Temp [C]', 'Bottom Water Temp [C]', 'Surface Water Temp [C]',
-       'Reserve', 'Wind Speed [m/s]', 'Max Wind Speed [m/s]',
+       'Reserve', 'Wind Speed [m_s]', 'Max Wind Speed [m_s]',
        'Wind Direction [deg]', 'Max Wind Direction [deg]', 'Air Temp [C]',
-       'Relative Hum [pct rh]', 'Absolute Hum [g/m^3]', 'Dew Point Temp [C]',
+       'Relative Hum [pct rh]', 'Absolute Hum [g_m^3]', 'Dew Point Temp [C]',
        'Absolute air pressure [hPa]', 'Relative air pressure [hPa]',
-       'Radiation [W/m^2]', 'Precip Indicator [0/1]', 'Precip [mm/h]',
-       'Daily Precip [mm/day]', 'Precip Type'])
+       'Radiation [W_m^2]', 'Precip Indicator [0_1]', 'Precip [mm_h]',
+       'Daily Precip [mm_day]', 'Precip Type'])
 for basefile in filenames[-7:]:
     file = basefile
 
@@ -47,20 +47,20 @@ for basefile in filenames[-7:]:
     df.rename(columns={'Temp. Aussen Nord': 'Air Temp [C]'}, inplace=True)
     df.rename(columns={'Wassertemp. unten Grad C': 'Bottom Water Temp [C]'}, inplace=True)
     df.rename(columns={'Wassertemp. oben Grad C': 'Surface Water Temp [C]'}, inplace=True)
-    df.rename(columns={'30003 Wind Mittel m/s': 'Wind Speed [m/s]'}, inplace=True)
-    df.rename(columns={'30011 Wind max m/s': 'Max Wind Speed [m/s]'}, inplace=True)
+    df.rename(columns={'30003 Wind Mittel m/s': 'Wind Speed [m_s]'}, inplace=True)
+    df.rename(columns={'30011 Wind max m/s': 'Max Wind Speed [m_s]'}, inplace=True)
     df.rename(columns={'30203 Windrichtung Mittel Grad': 'Wind Direction [deg]'}, inplace=True)
     df.rename(columns={'30211 Windrichtung max. Grad': 'Max Wind Direction [deg]'}, inplace=True)
     df.rename(columns={'30401 Lufttemperatur Grad C': 'Air Temp [C]'}, inplace=True)
     df.rename(columns={'30601 Rel. Feuchte %': 'Relative Hum [pct rh]'}, inplace=True)
-    df.rename(columns={'30603 Abs. Feuchte g/m2': 'Absolute Hum [g/m^3]'}, inplace=True)
+    df.rename(columns={'30603 Abs. Feuchte g/m2': 'Absolute Hum [g_m^3]'}, inplace=True)
     df.rename(columns={'30605 Taupunkttemperatur Grad C': 'Dew Point Temp [C]'}, inplace=True)
     df.rename(columns={'30801 Abs. Luftdruck hPa': 'Absolute air pressure [hPa]'}, inplace=True)
     df.rename(columns={'30803 Rel.  Luftdruck NHN hPa': 'Relative air pressure [hPa]'}, inplace=True)
-    df.rename(columns={'31001 Globalstrahlung W/m2': 'Radiation [W/m^2]'}, inplace=True)
-    df.rename(columns={'31401 Niederschlagsstatus 0/1': 'Precip Indicator [0/1]'}, inplace=True)
-    df.rename(columns={'31403 Niederschlagsintensitaet mm/h': 'Precip [mm/h]'}, inplace=True)
-    df.rename(columns={'31405 Niederschlagsmenge_mm/d': 'Daily Precip [mm/day]'}, inplace=True)
+    df.rename(columns={'31001 Globalstrahlung W/m2': 'Radiation [W_m^2]'}, inplace=True)
+    df.rename(columns={'31401 Niederschlagsstatus 0/1': 'Precip Indicator [0_1]'}, inplace=True)
+    df.rename(columns={'31403 Niederschlagsintensitaet mm/h': 'Precip [mm_h]'}, inplace=True)
+    df.rename(columns={'31405 Niederschlagsmenge_mm/d': 'Daily Precip [mm_day]'}, inplace=True)
     df.rename(columns={'31407 Niederschlagsart': 'Precip Type'}, inplace=True)
     
     df_full = pd.concat([df_full, df], axis = 0)
